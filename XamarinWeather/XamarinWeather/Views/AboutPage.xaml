@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XamarinWeather.Views.AboutPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:XamarinWeather.Controls"
+    x:Name="AboutUsPage"
+    Title="About"
+    BackgroundColor="{DynamicResource Gray-Bg}"
+    NavigationPage.HasNavigationBar="True">
+
+    <ContentPage.Content>
+        <Grid
+            ColumnSpacing="0"
+            RowDefinitions="Auto,*"
+            RowSpacing="0">
+
+            <ScrollView
+                Grid.Row="1"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <StackLayout
+                    HorizontalOptions="Center"
+                    Spacing="0"
+                    VerticalOptions="Center">
+
+                    <!--  Product image  -->
+                        <Image HeightRequest="110" WidthRequest="124" Source="icon_about.png" />
+
+
+                    <!--  Product version  -->
+                    <Label
+                        Margin="0,8.7,0,0"
+                        HorizontalOptions="CenterAndExpand"
+                        HorizontalTextAlignment="Start"
+                        Style="{StaticResource SimpleLabelStyle}"
+                        Text="Version 1.0"
+                        VerticalOptions="Start"
+                        VerticalTextAlignment="Start" />
+
+                    <!--  Product title  -->
+                    <Label
+                        LineHeight="{OnPlatform Android=1.25,
+                                                Default=-1}"
+                        Style="{StaticResource TitleLabelStyle}"
+                        Text="WeatherFy">
+                        <Label.Margin>
+                            <OnIdiom
+                                x:TypeArguments="Thickness"
+                                Default="0, 32, 0, 8"
+                                Phone="0, 16, 0, 16" />
+                        </Label.Margin>
+                    </Label>
+
+                    <!--  Product description  -->
+                    <Label
+                        Margin="15,0,15,0"
+                        Style="{StaticResource DescriptionLabelStyle}"
+                        Text="Developed by Dinis Costa using Xamarin Forms &amp; Prism.&#x0a;Authentication by Firebase.&#x0a;API by OpenWeatherMap.&#x0a;Some assets by Syncfusion." />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

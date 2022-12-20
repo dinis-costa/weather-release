@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasBackButton="False"
+             Title="{Binding Title}"
+             x:Class="XamarinWeather.Views.SearchPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Saved"
+                 IconImageSource="settings.png"
+                 Clicked="OnItemClicked"
+                 Order="Secondary"
+                 Priority="1" />
+        <ToolbarItem Text="Settings"
+                 IconImageSource="settings.png"
+                 Clicked="OnItemClicked"
+                 Order="Secondary"
+                 Priority="2" />
+        <ToolbarItem Text="About"
+                 IconImageSource="settings.png"
+                 Clicked="OnItemClicked"
+                 Order="Secondary"
+                 Priority="3" />
+        <ToolbarItem Text="Logout"
+                 IconImageSource="settings.png"
+                 Clicked="OnItemClicked"
+                 Order="Secondary"
+                 Priority="4" />
+    </ContentPage.ToolbarItems>
+
+    <AbsoluteLayout>
+
+        <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="WhiteSmoke"
+                     Padding="7">
+
+            <SearchBar 
+                Placeholder="Enter city/location name..."
+                SearchCommand="{Binding SearchCommand}"
+                BackgroundColor="WhiteSmoke"
+                Text="{Binding Query}" />
+
+            <syncfusion:SfListView x:Name="listView" 
+                   ItemsSource="{Binding ForecastList}"
+                   ItemSize="111"
+                   BackgroundColor="WhiteSmoke">
+
+                <syncfusion:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="LightGray"
+                               Margin="3"
+                               CornerRadius="30">   
+
+                            <Grid BackgroundColor="White">
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectItemCommand}" />
+                                </Grid.GestureRecognizers>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <ffimageloading:CachedImage
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Aspect="AspectFill"
+                                    CacheDuration="50"
+                                    RetryCount="3"
+                                    RetryDelay="600"
+                                    Source="{Binding Weather[0].Icon, StringFormat='https://openweathermap.org/img/wn/{0}@2x.png'}"
+                                    WidthRequest="100" />
+
+                                <Label Grid.Column="1" Grid.Row="0"  Text="{Binding Name}" FontAttributes="Bold" TextColor="Black" FontSize="22" />
+                                <Label Grid.Column="2" Grid.Row="0" Text="{Binding Sys.Country}" TextColor="Black" FontSize="16" />
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Weather[0].Main, StringFormat='{0}'}" TextColor="Black" FontSize="18" />
+
+                                <Label Grid.Column="3" Grid.Row="1" Text="{Binding Main.FeelsLike, StringFormat='{0:F0}ºC'}" FontAttributes="Bold" TextColor="#6B4DB8" FontSize="22" HorizontalTextAlignment="Start"  />
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </syncfusion:SfListView.ItemTemplate>
+            </syncfusion:SfListView>
+
+        </StackLayout>
+
+        <busyindicator:SfBusyIndicator 
+            x:Name="busyindicator"
+            IsBusy="{Binding IsLoading}"
+            AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+            AbsoluteLayout.LayoutFlags="All"
+            AnimationType="Globe"
+            ViewBoxWidth = "150"
+            ViewBoxHeight="150"
+            TextColor="#6B4DB8" />
+
+    </AbsoluteLayout>
+</ContentPage>
